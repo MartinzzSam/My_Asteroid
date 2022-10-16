@@ -13,5 +13,7 @@ interface AsteroidRepository {
 
     suspend fun getAsteroids(startDate : String , endDate:String) : Flow<Response<List<Asteroid>>>
 
+    suspend fun getScheduledAsteroids(startDate: String , endDate: String)
+
     suspend fun getSavedAsteroids() : List<Asteroid>
 }

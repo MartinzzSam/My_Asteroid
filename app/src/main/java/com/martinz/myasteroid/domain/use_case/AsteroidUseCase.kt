@@ -7,5 +7,6 @@ data class AsteroidUseCase(
     val GetAsteroids : GetAsteroids,
     val GetWeekAsteroids : GetWeekAsteroids,
     val GetTodayAsteroids : GetTodayAsteroids,
-    val GetSavedAsteroids : GetSavedAsteroids
+    val GetSavedAsteroids : GetSavedAsteroids,
+    val GetScheduledAsteroids : GetScheduledAsteroids
 )

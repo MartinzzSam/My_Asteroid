@@ -2,11 +2,13 @@ buildscript {
 
     ext {
         nav_version = "2.5.2"
-
+        work_version = "2.7.0"
+        dagger_hilt_version = "2.40.1"
+        room_version = "2.3.0-alpha01"
 
     }
     dependencies {
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.40.1")
+        classpath("com.google.dagger:hilt-android-gradle-plugin:$dagger_hilt_version")
         classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version")
 
     }

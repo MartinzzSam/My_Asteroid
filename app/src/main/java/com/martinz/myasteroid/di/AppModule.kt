@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.room.Room
 import com.martinz.myasteroid.BuildConfig
 import com.martinz.myasteroid.data.local.AsteroidDatabase
-import com.martinz.myasteroid.data.repository.AsteroidRepositoryImpl
 import com.martinz.myasteroid.data.remote.AsteroidApi
+import com.martinz.myasteroid.data.repository.AsteroidRepositoryImpl
 import com.martinz.myasteroid.domain.repository.AsteroidRepository
 import com.martinz.myasteroid.domain.use_case.*
 import com.martinz.myasteroid.util.Constants.BASE_URL
@@ -13,13 +13,12 @@ import com.martinz.myasteroid.util.getNextSevenDaysFormattedDates
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.internal.managers.ApplicationComponentManager
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
-import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
-import java.util.ArrayList
 import javax.inject.Singleton
 
 @Module
@@ -74,10 +73,11 @@ object AppModule {
     @Provides
     fun provideAsteroidUseCase( nextSevenDays : ArrayList<String>,repository: AsteroidRepository) : AsteroidUseCase = AsteroidUseCase(
         GetPictureOfDay = GetPictureOfDay(repository),
-        GetAsteroids = GetAsteroids(repository),
+        GetAsteroids = GetAsteroids(repository , nextSevenDays),
         GetWeekAsteroids = GetWeekAsteroids(repository),
         GetTodayAsteroids = GetTodayAsteroids(repository , nextSevenDays),
-        GetSavedAsteroids = GetSavedAsteroids(repository)
+        GetSavedAsteroids = GetSavedAsteroids(repository),
+        GetScheduledAsteroids = GetScheduledAsteroids(repository , nextSevenDays)
 
     )
 

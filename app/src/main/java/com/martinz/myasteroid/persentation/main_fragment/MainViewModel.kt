@@ -1,39 +1,34 @@
 package com.martinz.myasteroid.persentation.main_fragment
 
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
-import androidx.lifecycle.*
-import com.google.gson.Gson
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.martinz.myasteroid.data.remote.AsteroidApi
 import com.martinz.myasteroid.domain.use_case.AsteroidUseCase
 import com.martinz.myasteroid.persentation.AsteroidEvent
 import com.martinz.myasteroid.persentation.AsteroidStatus
 import com.martinz.myasteroid.util.Response
-import com.martinz.myasteroid.util.parseAsteroidsJsonResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import org.json.JSONObject
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 import javax.inject.Inject
 
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val useCase: AsteroidUseCase,
-    private val api : AsteroidApi
 ) : ViewModel() {
 
     private val _liveData = MutableLiveData<AsteroidStatus>()
     val liveData : LiveData<AsteroidStatus> = _liveData
 
     val isLoading = MutableStateFlow(false)
+
+
 
     init {
         getPictureOfDay()
@@ -147,27 +142,4 @@ class MainViewModel @Inject constructor(
         }
     }
 
-
-//    private fun testApi() {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            val firstApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-//            val date = LocalDate.parse("2022-10-14" , firstApiFormat)
-//            val endDate = LocalDate.parse("2022-10-19" , firstApiFormat)
-//
-//            try {
-//                val result = api.getAsteroids(startDate = date.toString() , endDate = endDate.toString())
-//                Log.i("myLog" , result.body().toString())
-//                if (result.isSuccessful) {
-//                    val gson = JSONObject(result.body()!!)
-//                    val list = parseAsteroidsJsonResult(gson)
-//                    Log.i("myLogGson" , gson.toString() )
-//                    Log.i("myLog" , list.toString() )
-//                }
-//            } catch (e : Throwable) {
-//                Log.i("myLog" , e.toString())
-//            }
-//
-//
-//        }
-//    }
 }

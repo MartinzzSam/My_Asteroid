@@ -14,7 +14,6 @@ import com.martinz.myasteroid.databinding.FragmentMainBinding
 import com.martinz.myasteroid.persentation.AsteroidAdapter
 import com.martinz.myasteroid.persentation.AsteroidEvent
 import com.martinz.myasteroid.persentation.OnClickListener
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -34,7 +33,6 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.viewModel = viewModel
 
         setHasOptionsMenu(true)
 
@@ -63,7 +61,7 @@ class MainFragment : Fragment() {
         lifecycleScope.launchWhenCreated {
             loadingObserver()
         }
-        pictureOfDayObserver()
+        statusObserver()
     }
 
 
@@ -92,9 +90,9 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun pictureOfDayObserver() {
+    private fun statusObserver() {
         viewModel.liveData.observe(viewLifecycleOwner) {
-            updateImageOfTheDay(it.pictureOfDay)
+            updatePictureOfDay(it.pictureOfDay)
             asteroidAdapter.submitList(it.asteroids)
             binding.asteroidRecycler.post {
                 binding.asteroidRecycler.smoothScrollToPosition(0)
@@ -117,8 +115,10 @@ class MainFragment : Fragment() {
     }
 
 
-    private fun updateImageOfTheDay(pictureOfDay: PictureOfDay?) {
-        binding.textView.text = pictureOfDay?.title ?: "Please Check Internet Connection"
-        Picasso.with(context).load(pictureOfDay?.url).into(binding.activityMainImageOfTheDay)
+    private fun updatePictureOfDay(pictureOfDay: PictureOfDay?) {
+        if (pictureOfDay != null) {
+            binding.pictureOfDay = pictureOfDay
+        }
+
     }
 }
