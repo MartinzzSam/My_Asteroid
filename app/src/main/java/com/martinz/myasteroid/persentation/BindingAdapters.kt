@@ -5,12 +5,12 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.martinz.myasteroid.R
-
+import com.martinz.myasteroid.data.model.PictureOfDay
 
 
 @BindingAdapter("pictureOfDay")
-fun bindPictureOfDay(imageView: ImageView , pictureOfDayUrl: String?) {
-    if(pictureOfDayUrl != null && pictureOfDayUrl.isNotBlank()) {
+fun bindPictureOfDay(imageView: ImageView , pictureOfDayUrl: PictureOfDay?) {
+    if(pictureOfDayUrl != null && pictureOfDayUrl.mediaType == "image") {
         Glide.with(imageView.context).load(pictureOfDayUrl).into(imageView)
     }
 
